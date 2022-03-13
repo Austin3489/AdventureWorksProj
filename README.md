@@ -7,7 +7,7 @@ Currently, the project has functions that return the following... </br>
 Names of employees in a given organization level </br>
 All the salaries in the organization ordered by business entity id </br>
 The amount a given employee makes </br>
-A function that returns the annual pay rate history for a given job position or job field, showing the promotion opportunities. For instance, inputting "Sales Representative" will return the pay rate history for the position of Sales Representative, which generally would be the same. However, entering "Sales" will search the database for all sales related jobs, including sales representative, and return on average what that job field made per year. An increase in pay indicates that higher ranking positions have opened up and more promotion opportunities have risen. The trend graph indicates if the average pay rate is on an incline or decline.
+A function that returns the annual pay rate history for a given job position or job field, showing the promotion opportunities. For instance, inputting "Sales Representative" will return the pay rate history for the position of Sales Representative, which generally would be less changing. However, entering "Sales" will search the database for all sales related jobs, including sales representative, and return on average what that job field made per year. An increase in pay indicates that higher ranking positions have opened up and more promotion opportunities have risen, along with more rates added. The trend graph indicates if the average pay rate is on an incline or decline.
 
 
 

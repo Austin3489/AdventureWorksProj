@@ -87,7 +87,7 @@ getRate("Terri Duffy")
 #Its purpose is to show reflection on how often the company would promote its employees, where job promotions lead to pay raises, increasing its yearly average.
 def payRateHistorybyPosition(userJobChoice,currentYear = 2013):
 
-    HireDates = []
+    payDates = []
     rates = []  
     
     currentYear = 2013
@@ -99,11 +99,11 @@ def payRateHistorybyPosition(userJobChoice,currentYear = 2013):
     print("\nPay Rate history for "+ userJobChoice) 
     if(len(userJobChoice) >=5):
 
-        cursor.execute('''SELECT DISTINCT P.BusinessEntityID, FirstName, LastName,Rate, JobTitle, HireDate
+        cursor.execute('''SELECT DISTINCT P.BusinessEntityID, FirstName, LastName,Rate, JobTitle, RateChangeDate
                    FROM Person.Person P,HumanResources.EmployeePayHistory HEP, HumanResources.Employee HE
                    WHERE P.BusinessEntityID = HEP.BusinessEntityID  AND HE.BusinessEntityID = P.BusinessEntityID AND
 				   JobTitle LIKE CONCAT('%',?,'%')
-                   ORDER BY HireDate ASC;''', userJobChoice)
+                   ORDER BY RateChangeDate ASC;''', userJobChoice) 
     else:
         print("Invalid Entry/Job not found in database")
         return 0
@@ -114,8 +114,7 @@ def payRateHistorybyPosition(userJobChoice,currentYear = 2013):
     for row in cursor:
         datetime = str(row[5])
         year = datetime[:4]
-        #print(row[5])
-        HireDates.append(year)
+        payDates.append(year)
         rates.append(row[3])
 
     k=0
@@ -127,31 +126,31 @@ def payRateHistorybyPosition(userJobChoice,currentYear = 2013):
 
        
         print("\nLast payrate recorded in year ", currentYear, "\n")
-        for j in range(len(HireDates)):
+        for j in range(len(payDates)):
    
                 try:
-                    if HireDates[j] != HireDates[j+1]:
+                    if payDates[j] != payDates[j+1]:
                             if j == 0:
                                 k+=1
-                                print("Average pay rate in", HireDates[j], "("+str(len(HireDates[:k]))+" employees): ",
+                                print("Average pay rate in", payDates[j], "("+str(len(payDates[:k]))+" reported rates): ",
                                       round(sum(rates[:k])/len(rates[:k]), 2))
                                 yearAvgs.append(round(sum(rates[:k])/len(rates[:k]), 2))
-                                years.append(HireDates[j])
+                                years.append(payDates[j])
                             else:
-                                print("Average pay rate in", HireDates[j], "("+str(len(HireDates[:k]))+" employees): ",  
+                                print("Average pay rate in", payDates[j], "("+str(len(payDates[:k]))+" reported rates): ",  
                                       round(sum(rates[:k])/len(rates[:k]), 2))
                                 yearAvgs.append(round(sum(rates[:k])/len(rates[:k]), 2))
-                                years.append(HireDates[j])
+                                years.append(payDates[j])
                     elif j == 0:
                         k += 1
                 except IndexError:
-                    print("\nCurrent average pay rate ("+str(len(HireDates[:k]))+" employees): ", 
+                    print("\nCurrent average pay rate ("+str(len(payDates[:k]))+" reported rates): ", 
                           round(sum(rates[:k])/len(rates[:k]), 2))
                     yearAvgs.append(round(sum(rates[:k])/len(rates[:k]), 2))
-                    years.append(HireDates[j])
+                    years.append(payDates[j])
                 k += 1 
-        print("First year position was hired:", HireDates[0], "\n")
-        print("Last year position was hired:", HireDates[-1], "\n")
+        print("First year position was hired:", payDates[0], "\n")
+        print("Last year position was hired:", payDates[-1], "\n")
         if(len(years)>1):
             yearAvgs = {'Year': years, 'Avg': yearAvgs}
             df  = pd.DataFrame(data=yearAvgs)
@@ -168,5 +167,4 @@ def payRateHistorybyPosition(userJobChoice,currentYear = 2013):
 
 jobChoice = input("\nWhat job or department would you like to see payment history on?\n")
 payRateHistorybyPosition(jobChoice)
-
 

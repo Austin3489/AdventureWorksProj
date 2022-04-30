@@ -1,5 +1,5 @@
 # AdventureWorksProj
-
+Language used: Python in Jupyter Notebook <br>
 This projects makes use of Microsoft SQL Server queries and python to illustrate and output data about the AdventureWorks2019 database, focusing on the employees and their information. It utilizes the pandas library to output data in Dataframe format. </br>
 
 Currently, the project has functions that return the following... </br>
